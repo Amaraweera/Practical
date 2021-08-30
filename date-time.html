@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CrossKnowledge - Code challenge</title>
+</head>
+<body>
+  <script>
+    // This will create elements for testing, DO NOT change this code
+    const MS_PER_MINUTE = 60000;
+    const minutes       = [0, 1, 30, 60, 6 * 60, 23 * 60, 24 * 60];
+
+    let NOW   = new Date();
+    let dates = [];
+
+    minutes.forEach((i) => dates.push(new Date(NOW - i * MS_PER_MINUTE)))
+
+    setInterval(() => {
+      document.body.innerHTML = '';
+      NOW = new Date();
+
+      dates.forEach((item, index) => {
+        let timeCount = null;
+        let timeSec   = null;
+        let timeMin   = null;
+        let timeHr    = null;
+
+        switch(index) {
+            case 0:
+                timeSec   = (((NOW - item)) / 1000).toFixed(0);
+                timeCount = timeSec > 59 ?
+                    `${Math.floor(timeSec/60)} ${timeSec/60 === 1 ?
+                      'Minute Ago' :
+                      'Minutes Ago'}` :
+                  `${timeSec} Seconds Ago`;
+
+                break;
+
+            case 1:
+                timeMin   = Math.floor(((NOW - item)) / 60000);
+                timeCount = timeMin === 1 ?
+                  `${timeMin} Minute Ago` :
+                  `${timeMin} Minutes Ago`;
+
+                break;
+
+            case 2:
+                timeMin   = Math.floor(((NOW - item)) / 60000);
+                timeCount = `${timeMin} Minutes Ago`;
+
+                break;
+
+            case 3:
+                timeHr    = Math.floor(((NOW - item)) / 3600000);
+                timeCount = timeHr === 1 ?
+                  `${timeHr} Hour Ago` :
+                  `${timeHr} Hours Ago`;
+
+                break;
+
+            case 4:
+                timeHr    = Math.floor(((NOW - item)) / 3600000);
+                timeCount = `${timeHr} Hours Ago`;
+
+                break;
+
+            case 5:
+                timeHr    = Math.floor(((NOW - item)) / 3600000);
+                timeCount = `${timeHr} Hours Ago`;
+
+                break;
+
+            default:
+                timeCount = item.toISOString();
+        }
+
+        let el = document.createElement("div")
+
+        isClearHtml  = true;
+        el.innerHTML = "Started ";
+
+        let dt = document.createElement('span');
+
+        dt.className = 'js-date-format';
+
+        dt.innerHTML = timeCount;
+        el.appendChild(dt);
+        document.body.appendChild(el);
+      })
+    }, 1000);
+  </script>
+</body>
+</html>
